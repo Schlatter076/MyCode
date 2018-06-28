@@ -1,0 +1,117 @@
+Git指令:  "注意:先跳转好路径"
+	mkdir 文件夹名  	"创建新目录"
+	cd 路径				"指定在当前路径"
+	pwd					"显示当前目录"
+	git inti 			"将当前目录改成git可控制的仓库，初始化"
+	ls -ah 				"显示默认隐藏的.git目录"
+	git add readme.txt	"添加readme.txt文件进git，可一次添加很多个文件"
+	git commit			"告诉git,把文件提交仓库"
+	git commit -m "wrote a readme file"		"-m后面是对添加文件的说明"
+注：以上为添加操作
+	git status 			"查看当前仓库状态"
+	git diff			"查看修改内容"
+	git log 			"查看提交的版本信息"--版本号和显示分开
+	git log --pretty=oneline				"版本号和说明显示在一行"
+	git reset --hard HEAD^^					"HEAD后面的^表示版本号，一个表示上一个，两个上两个，或者可以用HEAD~100表示前100个版本 "
+注：回退版本之后想再退回来，怎么办？
+	git reflog			"查看每一次操作内容"--找到想要去的版本号，如fecc5....
+	git reset --hard fecc5 					"即可将HEAD指向id为fecc5对应的版本号，完成跳转"	
+注：每次都可以用git status查看仓库状态
+	
+	cat 文件名			"显示当前文件内容"--如cat readme.txt
+	git diff HEAD -- readme.txt				"查看工作区和版本库里readme.txt文件差别"
+	git checkout -- readme.txt				"修改了readme但是没有add和commit，撤销修改的内容(现在在工作区里)，可用此指令"
+注：-- 很重要，对于已经add到暂存区的文件，可用下面的指令撤销，然后利用工作区丢弃指令进行丢弃
+	git reset HEAD readme.txt				"丢弃暂存区文件，使其退回到工作区"
+注：如果不但添加了文件，而且还提交了，只能利用版本回退到暂存区，然后依照上面两步进行丢弃操作
+	rm readme.txt 		"删除文件"--此时工作区和版本库里文件不一样了，如果确实要删除：
+	git rm readme.txt 并且 git commit -m "remove readme.txt"    如果删错了，可以：
+	git checkout -- readme.txt 		"还原了误删除操作"
+	
+	与Github关联：
+	在Github新建一个仓库(respository),Respository name与本地库名字一致
+	成功之后按照github指引，在本地gitbash里输入相应命令即可将本地仓库上传到GitHub
+	由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，
+	还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+	git push  origin master 		"将本地仓库推到GitHub"
+	
+	要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；
+	关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
+	此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
+	
+	
+	从GitHub克隆：
+	git clone git@github.com:Schlatter076/mygit.git		"mygit.git为GitHub仓库名"
+	ls 		"显示路径里的目录"
+注：跳转好路径很必要
+
+	查看分支：git branch
+	创建分支：git branch <name>
+	切换分支：git checkout <name>
+	创建+切换分支：git checkout -b <name>
+	合并某分支到当前分支：git merge <name>
+	删除分支：git branch -d <name>
+注：在分支上提交，更安全，不会影响到工作区，只要最后提交合并就可以
+
+	git log --graph --pretty=oneline --abbrev-commit		"可查看分支合并图"--用在合并有冲突的时候
+	
+	修复bug时，如工作区分支上有未完成的内容，可使用：
+	git stash			"储藏工作现场"
+	git stash list		"查看储藏的工作现场列表"
+	git stash apply		"恢复工作现场，但不删除列表",可用：git stash  drop	"手动删除储藏列表"
+	git stash pop		"恢复现场的同时删除列表"--可用git status查看仓库状态
+注：当有好几个工作现场被储藏时，可用：
+	git stash apply stash@{0}	"恢复某一列表中的现场，其中stash@{0}为想要恢复的现场列表"，同理：
+	git stash drop stash@{0}	"删除指定列表"--这句为我自己猜测，未实践^_^
+	
+	Tips:
+	开发一个新feature，最好新建一个分支；
+	如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+	
+	多人协作：
+	
+	查看远程库信息，使用git remote -v；
+	
+	本地新建的分支如果不推送到远程，对其他人就是不可见的；
+	
+	从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+	
+	在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+	
+	建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+	
+	从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+注：git log --graph --pretty=oneline --abbrev-commit	"查看分支情况"--有分支图显示
+
+	git rebase：
+	rebase操作的特点：把分叉的提交历史“整理”成一条直线，看上去更直观。缺点是本地的分叉提交已经被修改过了。
+	
+	打标签：
+	命令git tag <tagname>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+	命令git tag -a <tagname> -m "blablabla..." <版本号> 可以指定标签信息；(blabal为说明)
+	命令git tag可以查看所有标签。
+	
+	git tag -d <tagname>		"删除指定标签"
+	git push origin <tagname>	"标签默认保存在本地，可用此命令推送到远程"
+注：一次性推送全部标签，可用：git push origin --tags
+	若要删除已经推送到远程的标签，可先删除本地：
+		git tag -d <tagname>
+	再删除远程：
+		git push origin :refs/tags/<tagname>
+	
+	GitHub使用：
+	可先从要参与的项目中点"Fork"到自己的库里，然后克隆到本地，开始操作，最后再push上去
+	
+	忽略特殊文件：
+	在Git工作区的根目录下创建一个特殊的.gitignore文件，然后把要忽略的文件名填进去，Git就会自动忽略这些文件。
+	然后将.gitignore提交到Git，用git status检查是否生效
+注：有时被忽略的文件，又想提交，可使用:git add -f <filename>
+	git check-ignore -v <filename>		"用来检查被忽略的文件"
+	
+	为命令配置别名：
+	git config --global alias.<简写名> <原指令>    如：git config --global alias.st status 将status配置为st
+	
+	
+	
+	
+	
