@@ -110,8 +110,3 @@ Git指令:  "注意:先跳转好路径"
 	
 	为命令配置别名：
 	git config --global alias.<简写名> <原指令>    如：git config --global alias.st status 将status配置为st
-	
-	
-	
-	
-	

@@ -16,5 +16,5 @@ int main()
 			}
 		}
 	}
-	printf("Finished!");
+	printf("Finished!\n");
 }
