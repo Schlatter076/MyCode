@@ -1,5 +1,5 @@
 /**
-*鍚屾牱鏄灇涓炬硶锛宩ava杩愯蹇繃python锛宑璇█蹇繃java
+*同样是枚举法，java运行快过python，c语言快过java
 */
 #include <stdio.h>
 int main()
@@ -16,5 +16,5 @@ int main()
 			}
 		}
 	}
-	printf("Finished!\n");
+	printf("完成啦\n");
 }
