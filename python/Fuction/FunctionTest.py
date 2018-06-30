@@ -101,3 +101,24 @@ def person(name, age, **kw):
 		pass
 	print('name:', name, 'age', 'other:', kw)
 person('Jeff', 24, city='文县', job='工程师', addr='屯儿')
+
+# 命名关键字参数
+'''
+用来限制关键字参数名字
+'''
+def person(name, age, *, city, job):
+	# '*'号后面被视为命名关键字参数
+	pass
+def person(name, age, *args, city, job):
+	# 有了可变参数，就不用再写'*'
+	pass
+print('以下是总结与测试：')
+# 接收任意个数的乘积
+def product(x, *args):
+	for i in args:
+		if not isinstance(i, (int, float)):
+			raise TypeError('格式错误')
+		x *= i
+	return x
+print(product(1, 3, 5, 7, 9))
+print(product(2))
