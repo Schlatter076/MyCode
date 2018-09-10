@@ -6,10 +6,11 @@ def nums():
     n = 1
     while True:
         n += 2
-        # 定义成生成器
+        # 定义成生成器,调用一次则取下一个数如，3，5，7等
         yield n
 def notDivisible(n):
-    return lambda x : x % n > 0
+    return lambda x : x % n > 0  # 取大于n的数
+# 此函数返回一个序列
 def primes():
     yield 2
     it = nums() # 初始序列

@@ -99,7 +99,7 @@ def person(name, age, **kw):
 	if 'job' in kw:
 		# 检查是否有kw参数
 		pass
-	print('name:', name, 'age', 'other:', kw)
+	print('name:', name, 'age:', age, 'other:', kw)
 person('Jeff', 24, city='文县', job='工程师', addr='屯儿')
 
 # 命名关键字参数

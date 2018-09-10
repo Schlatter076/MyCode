@@ -1,7 +1,7 @@
 #!usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# 高阶函数 函数名时变量，故可以用函数本身做另一个函数的参数
+# 高阶函数 函数名是变量，故可以用函数本身做另一个函数的参数
 def add(x, y, f):
     return f(x) + f(y)
 print(add(-5, 6, abs))

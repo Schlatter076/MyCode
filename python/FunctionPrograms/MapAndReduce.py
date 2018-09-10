@@ -36,4 +36,4 @@ def str2float(s):
     # 将整数转换成浮点数
     resultfloat = resultint / (10 ** (len(s) - dot_rindex - 1))
     return resultfloat
-print(str2float('45.6789'))
+print(str2float('45678.9'))
